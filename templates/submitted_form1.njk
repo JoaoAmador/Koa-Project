@@ -1,0 +1,17 @@
+{% extends "layout.njk" %}
+{% block title %}Submitted form 1{% endblock %}
+{% block header %}<h1>Form1 submitted</h1>{% endblock %}
+  
+{% block content %}
+    <p>Thanks for your submission, {{name}}!</p>
+    <p>Here's a review of the information that you sent:</p>
+    <p>
+       <strong>Name</strong>: {{name}} <br>
+       <strong>Email</strong>: {{email}} <br>
+       <strong>Comments</strong>: <pre>{{comments}}</pre>
+       <strong>Date</strong>: {{date1}} <br>
+       <strong>QR CODE</strong>: ({{qrCode}}) <br>
+    </p>
+    <img src="{{QR}}" class="img-responsive" alt="QR Code"/> 
+
+{% endblock %}

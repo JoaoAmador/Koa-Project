@@ -1,0 +1,68 @@
+{% extends "layout.njk" %}
+{% block title %}Chart2 Page{% endblock %}
+{% block header %}<h1>Testing ChartJS with {{gname}}</h1>{% endblock %}
+  
+{% block content %}
+  <!-- bar chart canvas element -->
+  <canvas id="chart1" width="600" height="400"></canvas>
+  <p id="caption">The chart is displaying a time series chart.</p>
+  <input type="text" id="txt1" value="" size="50"/>
+
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+
+<script src="/js/moment.min.js"></script>
+<script src="/js/locale_pt.js"></script>
+<script src="/js/Chart.min.js"></script>
+<script>
+
+var ctx = document.getElementById('chart1').getContext('2d');
+var data = {
+    // Labels should be Date objects
+    labels: [new Date(2017, 08, 16), new Date(2017, 08, 17), new Date(2017, 08, 18),
+             new Date(2017, 08, 19, 7,11,32),new Date(2017, 08, 20,  9,15,30)],
+    datasets: [{
+        fill: false,
+        label: 'Page Views',
+        data: [280, 250, 340, 310, 230],
+        borderColor: '#fe8b36',
+        backgroundColor: '#fe8b36',
+        lineTension: 0,
+    }]
+}
+var options = {
+    type: 'line',
+    data: data,
+    options: {
+        fill: false,
+        responsive: false,
+        scales: {
+            xAxes: [{
+                type: 'time',
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Date",
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                },
+                display: true,
+                scaleLabel: {
+                    display: true,
+                    labelString: "Page Views",
+                }
+            }]
+        }
+    }
+}
+var chart = new Chart(ctx, options);
+
+var t1 = moment('{{time1}}').add(2, 'day').format('dddd, MMMM Do YYYY, HH:mm:ss Z')
+document.getElementById('txt1').value = t1;
+</script>
+{% endblock %}

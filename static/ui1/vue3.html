@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://unpkg.com/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+  <v-app id="inspire">
+    <v-content >
+      <v-container fluid fill-height >
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm20 md20>
+           
+                        <v-card class="elevation-12">
+                        <v-toolbar dark color="light-green darken-2">
+                            <v-toolbar-title>Ref. R00084262 - Caracterização do Cliente</v-toolbar-title>
+                            <v-spacer></v-spacer>
+                        </v-toolbar>
+
+
+                        <v-card-text>
+                            <v-form>
+                                <v-container fluid>
+                                    <v-layout row wrap>
+                                        <v-flex xs12 sm5 offset-sm0>
+                                            <v-text-field name="name" label="Nome" id="name"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm4 offset-sm0>
+                                            <v-select :items="segDeclarativo" name="segDeclarativo" label="Segmento Declarativo" id="segDeclarativo"></v-select>
+                                        </v-flex>
+                                        <v-flex xs12 sm3 offset-sm0>
+                                        <v-select :items="moedas" v-model="e2" label="Moeda" single-line></v-select>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-container>
+                            </v-form>
+                        </v-card-text>
+
+
+                        <v-divider></v-divider>
+
+
+                     
+  <v-form ref="form" v-model="valid" lazy-validation>
+    <v-text-field
+      v-model="name"
+      :rules="nameRules"
+      :counter="10"
+      label="Name"
+      required
+    ></v-text-field>
+    <v-text-field
+      v-model="email"
+      :rules="emailRules"
+      label="E-mail"
+      required
+    ></v-text-field>
+    <v-select
+      v-model="select"
+      :items="items"
+      :rules="[v => !!v || 'Item is required']"
+      label="Item"
+      required
+    ></v-select>
+    <v-checkbox
+      v-model="checkbox"
+      :rules="[v => !!v || 'You must agree to continue!']"
+      label="Do you agree?"
+      required
+    ></v-checkbox>
+
+    <v-btn
+      :disabled="!valid"
+      @click="submit"
+    >
+      submit
+    </v-btn>
+    <v-btn @click="clear">clear</v-btn>
+  </v-form>
+                        <v-card-text>
+                            <v-form>
+                                <v-container fluid>
+                                    <v-layout row wrap>
+                                        <v-flex xs12 sm2 offset-sm0>
+                                            <v-text-field name="nproponentes" label="Nº Proponentes" id="nproponentes"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm3 offset-sm1>
+                                            <v-select :items="paisResidencia" name="paisResidencia" label="País de Residência" id="paisResidencia"></v-select>
+                                        </v-flex>
+                                    </v-layout>
+
+                                    <v-layout row wrap>
+                                        <v-flex xs12 sm2 offset-sm0>
+                                            <v-subheader class="control-label">1º Proponente</v-subheader >
+                                        </v-flex>
+                                        <v-flex xs6 sm2 offset-sm1>
+                                        <v-menu
+                                            ref="menu"
+                                            lazy
+                                            :close-on-content-click="false"
+                                            v-model="menu"
+                                            transition="scale-transition"
+                                            offset-y
+                                            full-width
+                                            :nudge-right="40"
+                                            min-width="290px"
+                                            :return-value.sync="date"
+                                        >
+                                            <v-text-field
+                                                slot="activator"
+                                                label="Data Nascimento"
+                                                v-model="date"
+                                                prepend-icon="event"
+                                                readonly
+                                            ></v-text-field>
+                                            <v-date-picker v-model="date" no-title scrollable>
+                                            <v-spacer></v-spacer>
+                                            <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                                            </v-date-picker>
+                                        </v-menu>
+                                        </v-flex>
+                                        <v-flex xs12 sm2 offset-sm1>
+                                            <v-text-field name="nif" label="NIF" id="nif"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm3 offset-sm1>
+                                            <v-select :items="profissao" name="profissao" label="Profissão" id="profissao"></v-select>
+                                        </v-flex>
+                                    </v-layout>
+
+                                    <v-layout row wrap>
+                                        <v-flex xs12 sm2 offset-sm0>
+                                            <v-subheader class="control-label">Seguro Prestação Segura</v-subheader>
+                                            </v-flex>
+                                            <v-radio-group v-model="radioGroup" row>
+                                                    <v-radio label="Não" value="radio-1" ></v-radio>
+                                                    <v-radio label="Sim" value="radio-2"></v-radio>
+                                            </v-radio-group>
+                                    </v-layout>
+
+                                    <v-layout row wrap>
+                                        <v-flex xs12 sm2 offset-sm0>
+                                            <v-subheader class="control-label">Ano dos Rendimentos</v-subheader>
+                                        </v-flex>
+                                        <v-flex xs12 sm1 offset-sm0>
+                                        <v-select :items="anoRendimento" v-model="e2" label="Ano" single-line></v-select>
+                                        </v-flex>
+                                        <v-flex xs12 sm2 offset-sm0>
+                                            <v-text-field name="rab1titular" label="RAB do 1º titular" id="rab1titular"></v-text-field>
+                                        </v-flex>
+                                    </v-layout>
+                                    <v-layout row wrap>
+                                        <v-flex xs12 sm3 offset-sm3>
+                                            <v-text-field name="ralAgregadoFamiliar" label="RAL do Agregado Familiar" id="ralAgregadoFamiliar"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm3 offset-sm1>
+                                            <v-btn  @click.native.stop="dialog = true">Simulador RL</v-btn>
+                                            <v-dialog v-model="dialog" max-width="500">
+                                                <v-card>
+                                                    <v-card-title class="headline">Simulação Rendimento Líquido</v-card-title>
+                                                    <v-card-text>Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.</v-card-text>
+                                                    <v-card-actions>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Disagree</v-btn>
+                                                    <v-btn color="green darken-1" flat="flat" @click.native="dialog = false">Agree</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
+                                            </v-dialog>
+                                        </v-flex>
+                                        <v-flex xs12 sm3 offset-sm3>
+                                            <v-text-field name="encargos" label="Encargos Mensais com outros créditos" id="encargos"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm3 offset-sm1>
+                                            <v-text-field name="despesas" label="Despesas Regulares Agregado familiar" id="despesas"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm3 offset-sm3>
+                                            <v-text-field name="membros" label="Nº de Membros do Agregado familiar" id="membros"></v-text-field>
+                                        </v-flex>
+                                        <v-flex xs12 sm3 offset-sm1>
+                                            <v-text-field name="ndependentes" label="Nº dependentes" id="ndependentes"></v-text-field>
+                                        </v-flex>
+                                    </v-layout>
+
+                                    <v-expansion-panel focusable>
+                                        <v-expansion-panel-content>
+                                            <div slot="header"  >Contactos</div>
+                                            <v-card>
+                                                <v-card-text class="grey lighten-3">
+                                                <v-layout row wrap>
+                                                    <v-flex xs12 sm2 offset-sm0>
+                                                        <v-subheader class="control-label">1º Proponente</v-subheader >
+                                                    </v-flex>
+                                                    <v-flex xs12 sm2 offset-sm0>
+                                                        <v-text-field name="telefone" label="Telefone" id="telefone"></v-text-field>
+                                                    </v-flex>
+                                                    <v-flex xs12 sm2 offset-sm1>
+                                                        <v-text-field name="telemovel" label="Telemovel" id="telemovel"></v-text-field>
+                                                    </v-flex>
+                                                    <v-flex xs12 sm2 offset-sm1>
+                                                        <v-text-field name="telefoneEmpresa" label="Telefone Emprego" id="telefoneEmpresa"></v-text-field>
+                                                    </v-flex>
+                                                </v-layout>
+                                                <v-layout row wrap>
+                                                    <v-flex xs12 sm2 offset-sm2>
+                                                        <v-text-field name="email" label="Email" id="email"></v-text-field>
+                                                    </v-flex>
+                                                    <v-flex xs12 sm2 offset-sm1>
+                                                        <v-select :items="contatopref" v-model="e2" label="Contacto Pref" single-line></v-select>
+                                                    </v-flex>
+                                                    <v-flex xs12 sm1 offset-sm1>
+                                                        <v-text-field name="nproponentes" label="Horário Entrada" id="nproponentes"></v-text-field>
+                                                    </v-flex>
+                                                    <v-flex xs12 sm1 offset-sm1>
+                                                        <v-text-field name="nproponentes" label="Horário Saída" id="nproponentes"></v-text-field>
+                                                    </v-flex>
+                                                </v-layout>
+                                                </v-card-text>
+                                            </v-card>
+                                        </v-expansion-panel-content>
+                                    </v-expansion-panel>
+                                </v-container>
+                            </v-form>
+                        </v-card-text>
+                        <v-divider></v-divider>
+
+                           <v-card-text>
+                            <v-form>
+
+  <v-container fluid>
+                                    <v-layout row wrap>
+                                        <v-flex xs12 sm4 offset-sm0>
+                                            <v-checkbox label="`Protocolo Cliente`" v-model="checkboxProtocoloCliente, enabled" ></v-checkbox>
+                                        </v-flex>
+                                        <v-flex xs12 sm4 offset-sm0>
+                                            <v-text-field v-model="e4" :disabled="!enabled"></v-text-field>
+                                        </v-flex>
+                                    </v-layout>
+</v-container>
+                        </v-form>
+                </v-card-text>
+
+                        
+                        </v-flex>
+                        </v-card>
+                        
+        </v-layout>
+      </v-container>
+    </v-content>
+  </v-app>
+  </div>
+
+<script src="/js/polyfill.min.js"></script>
+
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vuetify/dist/vuetify.js"></script>
+  <script>
+    new Vue({ 
+        el: '#app',
+        
+         data: {
+        e1: null,
+        e2: null,
+        e4: null,
+        e5: null,
+        e6: null,
+        e7: null,
+        e8: null,
+        active: null,
+        date: null,
+        menu: false,
+        radioGroup: 'radio-1',
+        checkboxProtocoloCliente: false, 
+        checkboxEntidadeEmprgadora: false,
+        checkboxEmpreendimento: false,
+        checkboxCanalAngariador: false, 
+        checkboxinterCredito: false,
+        dialog: false,
+        enabled: false,
+        enabled2: false,
+        enabled3: false,
+        enabled4: false,
+        enabled5: false,
+        items: [
+            { id: 1},
+            { id: 2},
+        ],
+
+        moedas: [
+            { text: 'Euro' }
+        ], 
+        segDeclarativo:[
+            { text: 'Top Private' },
+            { text: 'Private' },
+            { text: 'Negócios Fidelizados' },
+            { text: 'Negócios Não Fidelizados' },
+            { text: '360º Fidelizados' },
+            { text: '360º Não Fidelizados' },
+            { text: 'Seniores' },
+            { text: 'Jovens' },
+            { text: 'Classic Fidelizados' },
+            { text: 'Particulares Não Fidelizados' },
+            { text: 'Outros' },
+            { text: 'Residentes no Estrangeiro Fidelizados' },
+            { text: 'Residentes no Estrangeiro não Fidelizados' }
+        ],
+        paisResidencia:[
+            { text: 'Austria' },
+            { text: 'Bélgica' },
+            { text: 'Bulgaria' },
+            { text: 'Chipre' },
+            { text: 'Republica Checa' },
+            { text: 'Dinamarca' },
+            { text: 'Finlandia' },
+            { text: 'França' },
+            { text: 'Alemanha' },
+            { text: 'Grécia' },
+            { text: 'Hungria' },
+            { text: 'Irlanda' },
+            { text: 'Italia' },
+            { text: 'Latvia' },
+            { text: 'Lituania' },
+            { text: 'Luxemburgo' },
+            { text: 'Malta' },
+            { text: 'Holanda' },
+            { text: 'Polonia' },
+            { text: 'Romenia' },
+            { text: 'Eslovaquia' },
+            { text: 'Eslovenia' },
+            { text: 'Espanha' },
+            { text: 'Suiça' },
+            { text: 'Inglaterra' },
+            { text: 'EUA' },
+            { text: 'Canada' },
+            { text: 'Africa do Sul e Central' },
+            { text: 'Middle East' },
+            { text: 'Africa' },
+            { text: 'Asia' },
+            { text: 'Ausralia e Nova Zelandia' },
+            { text: 'Outros' }
+        ],
+        profissao:[
+            { text: 'Advogados' },
+        ],
+        anoRendimento:[
+            { text: '2015' },
+            { text: '2016' },
+            { text: '2017' },
+        ],
+        condEspecial:[
+            { text: 'Oferta Desinvestimento' },
+        ],
+        canalAngariador:[
+            { text: 'Assurfinance'},
+            { text: 'Novos Residentes'},
+            { text: 'Angariadores Imobiliários'},
+            { text: 'T. Residencial Ag. Angariadores'},
+            { text: 'UCCIT'},
+            { text: 'NB Espanha'},
+            { text: 'Advogados e Solicitadores'},
+            { text: 'TOCS'},
+            { text: 'Reformados'},
+            { text: 'Notários'}
+        ],
+        contatopref:[
+            { text: 'Telefone'}
+        ],
+        IntermediárioCredito:[
+            { text: 'Vinculado'},
+            { text: 'Não Vinculado'},
+        ],
+        page: 1,
+
+          valid: true,
+      name: '',
+      nameRules: [
+        v => !!v || 'Name is required',
+        v => (v && v.length <= 10) || 'Name must be less than 10 characters'
+      ],
+      email: '',
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid'
+      ],
+      select: null,
+      items: [
+        'Item 1',
+        'Item 2',
+        'Item 3',
+        'Item 4'
+      ],
+      checkbox: false
+
+    },
+    methods: {
+      submit () {
+        if (this.$refs.form.validate()) {
+          // Native form submission is not yet supported
+          axios.post('/api/submit', {
+            name: this.name,
+            email: this.email,
+            select: this.select,
+            checkbox: this.checkbox
+          })
+        }
+      },
+      clear () {
+        this.$refs.form.reset()
+      }
+    }
+    })
+     </script>
+
+        </body>
+</html>

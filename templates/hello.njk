@@ -1,0 +1,71 @@
+{% extends "layout.njk" %}
+{% block title %}Hello Page{% endblock %}
+{% block header %}<h1>Hello, {{username}} from templates</h1>{% endblock %}
+  
+{% block content %}
+  <ul>
+    {% for message in messages %}
+    <li>{{ loop.index }}: {{ message }}</li>
+    {% endfor %}
+  </ul>
+  
+  <input id="slider1" type="text" 
+    data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="14"/>
+   &nbsp;&nbsp;
+   <input id="s1tx" type="text" value="14" style="width: 2em" maxLength="2"/>
+   <br/><br/>
+   <div>
+      <table id="table1" class="table table-bordered table-striped">
+          <thead>
+              <tr>
+                  <th class="col-sm-1" data-field="id">Id</th>
+                  <th class="col-sm-3" data-field="name">Name</th>
+                  <th class="col-sm-3" data-field="email">email</th>
+              </tr>
+          </thead>
+      </table>
+    </div>
+{% endblock %}
+
+{% block footer %}
+  {{ super() }}
+<script>
+$(function(){
+
+  var mySlider = $("#slider1").bootstrapSlider();
+
+  $("#bt1").click(function() {
+    var val = mySlider.bootstrapSlider('getValue');
+    console.log("slider:" + val);
+  });
+  
+  mySlider.on("slide", function(ev) {
+    $("#s1tx").val(ev.value);
+  });
+
+  $("#s1tx").blur(function() {
+    mySlider.bootstrapSlider('setValue', $(this).val());
+  });
+  
+//Activated the table
+  var tableClient = $('#table1').DataTable({
+      "lengthMenu": [[4, 8, -1], [4, 8, "All"]],
+      "ajax": {
+          "url": "/api/users",
+          "type": "GET",
+          "success" :  function(data){
+              $.each(data, function(ind, obj){
+                  
+                  tableClient.row.add([
+                      obj.id,
+                      obj.name,
+                      obj.email,
+                  ]).draw();
+              });
+          }
+      },
+  });
+  
+});
+</script>
+{% endblock %}

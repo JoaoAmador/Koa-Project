@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Testing VUE.js</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src='/js/vue.js'></script>
+  
+     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</head>
+<body>
+  <header id="header">
+  </header>
+
+  <div id="content">
+
+    <div id="app-5">
+            <p>{{ msg }}</p>
+            <input v-model="msg"> <br/>
+            <button v-on:click="reverseMessage">Reverse Message</button>
+            <button v-on:click="getpaises">Reverse Message</button>
+    </div>
+  </div>
+  
+
+
+<script>
+    
+    var app5 = new Vue({
+      el: '#app-5',
+      data: {
+        msg: 'Olá Vue.js!'
+      },
+      methods: {
+        reverseMessage: function () {
+          this.msg = this.msg.split('').reverse().join('')
+        },
+
+         getpaises: function () {
+  
+          axios.get('/api/pais').then(response => {
+            this.results = response.data
+            console.log(response)
+          })
+        }
+          
+       
+
+        
+      }
+    })
+
+    
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+{% extends "layout.njk" %}
+{% block title %}Test Form1{% endblock %}
+{% block header %}<h1>Submit a form</h1>
+<link href='/css/jquery-ui.min.css' rel="stylesheet">
+{% endblock %}
+  
+{% block content %}
+<form method="post" action='/form1'>
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="name">Name:</label>
+    <div class="col-sm-10">
+      <input class='form-control' type="text" name="name" placeholder="your name">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="email">Email address:</label>
+    <div class="col-sm-8">
+      <input class='form-control' type="email" name="email"/>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="comments">Comments:</label>
+    <div class="col-sm-10">
+      <textarea class='form-control' name="comments"></textarea><br />
+    </div>  
+  </div>
+
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="date1">Date:</label>
+    <div class="col-sm-2">
+      <input class='form-control dtpick' type="text" name="date1"/>
+    </div>  
+  </div>
+
+  <div class="form-group row">
+    <label class="control-label col-sm-2" for="qrCode">QR Code:</label>
+    <div class="col-sm-8">
+      <input class='form-control' type="text" name="qrCode"/>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button class='btn btn-primary' type="submit">Submit</button>
+    </div>
+  </div>
+</form>
+
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+<script src='/js/jquery-ui.min.js'></script>
+<script src='/js/datepicker-pt.js'></script>
+<script>
+$(function() {
+    $( ".dtpick" ).datepicker({ dateFormat: 'dd-mm-yy'  });
+});
+</script>
+{% endblock %}
